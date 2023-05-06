@@ -38,8 +38,8 @@ public class FileManager {
             
             Process newProcess = new Process(
                     tempList[0],
-                    Float.parseFloat(tempList[1]),
-                    Float.parseFloat(tempList[2])
+                    Integer.parseInt(tempList[1]),
+                    Integer.parseInt(tempList[2])
             );
             
             String[] ioList = tempList[3].split(",");

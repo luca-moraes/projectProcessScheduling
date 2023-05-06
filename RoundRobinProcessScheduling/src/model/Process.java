@@ -13,15 +13,19 @@ import java.util.List;
  */
 public class Process {
     public String pidName;
-    public float duration;
-    public float inputTime;
+    public int duration;
+    public int inputTime;
     public List<Float> ioTimes;
+    public int waitTime;
+    public int turnaround;
 
-    public Process(String name, float duration, float inputTime) {
+    public Process(String name, int duration, int inputTime) {
         this.ioTimes = new ArrayList<>();
         this.pidName = name;
         this.duration = duration;
         this.inputTime = inputTime;
+        this.waitTime = 0;
+        this.turnaround = 0;
     }
     
     public void addIo(float ioTime){
