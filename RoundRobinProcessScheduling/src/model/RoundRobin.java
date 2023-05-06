@@ -12,15 +12,11 @@ import java.util.List;
  * @author lmoraes
  */
 public class RoundRobin {
-    public List<Process> processList;
+    public List<Process> processList = new ArrayList<>();
     public float quantum;
     
-    public RoundRobin(float quantum){
-        processList = new ArrayList<>();
+    public RoundRobin(float quantum, List<Process> list){
+        processList = list;
         this.quantum = quantum;
-    }
-    
-    public void addProcess(Process newProcess){
-        processList.add(newProcess);
     }
 }

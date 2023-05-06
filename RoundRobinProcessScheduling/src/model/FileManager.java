@@ -6,6 +6,7 @@ package model;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,14 +23,34 @@ public class FileManager {
         filePath = path;
     }
     
-    public List<String> readFile() throws FileNotFoundException{
+    public List<Process> readFile() throws FileNotFoundException{
         scan = new Scanner(new FileReader(this.filePath))
             .useDelimiter("\\n");
         
         while (scan.hasNext()) {
             lines.add(scan.next());
         }
-    
-        return lines;
+        
+        List<Process> processList = new ArrayList<>();
+        
+        for(String line : lines){
+            String[] tempList = line.split(" ");
+            
+            Process newProcess = new Process(
+                    tempList[0],
+                    Float.parseFloat(tempList[1]),
+                    Float.parseFloat(tempList[2])
+            );
+            
+            String[] ioList = tempList[3].split(",");
+            
+            for(String io : ioList){
+                newProcess.addIo(Float.parseFloat(io));            
+            }
+            
+            processList.add(newProcess);
+        }
+        
+        return processList;
     }
 }
