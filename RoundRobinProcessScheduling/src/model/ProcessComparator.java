@@ -11,10 +11,9 @@ import java.util.Comparator;
  * @author eu
  */
 public class ProcessComparator implements Comparator<Process>{
-
+    
     @Override
     public int compare(Process t, Process t1) {
         return t.inputTime - t1.inputTime;
     }
-    
 }

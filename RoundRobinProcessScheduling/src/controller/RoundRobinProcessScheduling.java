@@ -4,6 +4,10 @@
  */
 package controller;
 
+import java.io.FileNotFoundException;
+import model.FileManager;
+import model.RoundRobin;
+
 /**
  *
  * @author lmoraes
@@ -13,8 +17,11 @@ public class RoundRobinProcessScheduling {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String[] args) throws FileNotFoundException {
+        FileManager fileManager = new FileManager("/home/eu/Documentos/projectProcessScheduling/RoundRobinProcessScheduling/src/controller/teste.txt");
+        
+        RoundRobin roundRobin = new RoundRobin(5, fileManager.readFile());
+        
+        roundRobin.schedule();
     }
-    
 }

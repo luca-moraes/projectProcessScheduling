@@ -21,7 +21,7 @@ public class RoundRobin {
         this.quantum = quantum;
     }
     
-    public void orderList(){
+    private void orderList(){
         Collections.sort(processList, new ProcessComparator());
     }
     
@@ -30,7 +30,7 @@ public class RoundRobin {
         
         int lastListProcess = 0;
         List<Process> queue = new ArrayList<>();
-        Process cpu = processList.get(lastListProcess);
+        Process cpu = processList.isEmpty() ? null : processList.get(lastListProcess);
         lastListProcess++;
         
         int time = 0;
@@ -45,7 +45,7 @@ public class RoundRobin {
         pQuantum++;
         cpu.timeRunned++;
         
-        while(!queue.isEmpty() && cpu != null){
+        while(cpu != null){
             printTime(time);
             
             //check if the process have an io operation
@@ -61,6 +61,7 @@ public class RoundRobin {
             if(processList.get(lastListProcess).inputTime == time){
                 printEvent(1, processList.get(lastListProcess));
                 queue.add(processList.get(lastListProcess));
+                lastListProcess = lastListProcess == processList.size() - 1 ? lastListProcess : lastListProcess + 1;
             }
             
             //check if a process has reached the quantum limit
@@ -96,16 +97,16 @@ public class RoundRobin {
         this.printEnd();
     }
     
-    public void printTime(int time){
+    private void printTime(int time){
         System.out.println(String.format("********** TEMPO %d ************** ", time));
     }
     
-    public void printCpu(List<Process> queue, Process cpu){
+    private void printCpu(List<Process> queue, Process cpu){
         System.out.print("FILA: ");
         
         if(!queue.isEmpty()){
             for(Process p : queue){
-                System.out.printf("%s (%d) ", p.pidName, (cpu.duration - cpu.timeRunned));
+                System.out.printf("%s(%d) ", p.pidName, (p.duration - p.timeRunned));
             }
             System.out.println();
         }else{
@@ -113,13 +114,13 @@ public class RoundRobin {
         }
         
         if(cpu != null){
-            System.out.printf("CPU: %s (%d) \n", cpu.pidName, (cpu.duration - cpu.timeRunned));
+            System.out.printf("CPU: %s(%d) \n", cpu.pidName, (cpu.duration - cpu.timeRunned));
         }else{
             System.out.println("ACABARAM OS PROCESSOS!!!");
         }
     }
     
-    public void printEvent(int event, Process pEvent){
+    private void printEvent(int event, Process pEvent){
         String eventMsg = " ";
         
         switch(event){
@@ -140,7 +141,7 @@ public class RoundRobin {
         System.out.println(eventMsg);
     }
     
-    public void printInit(){
+    private void printInit(){
         System.out.println(
                 "***********************************\n" +
                 "***** ESCALONADOR ROUND ROBIN *****\n" +
@@ -150,12 +151,11 @@ public class RoundRobin {
         );
     }
     
-    public void printEnd(){
+    private void printEnd(){
         System.out.println(
                 "-----------------------------------\n"+
                 "------- Encerrando simulacao ------\n"+
                 "-----------------------------------"
         );
     }
-    
 }

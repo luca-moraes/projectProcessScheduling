@@ -21,6 +21,7 @@ public class FileManager {
     
     public FileManager(String path){
         filePath = path;
+        this.lines = new ArrayList<>();
     }
     
     public List<Process> readFile() throws FileNotFoundException{
@@ -42,10 +43,12 @@ public class FileManager {
                     Integer.parseInt(tempList[2])
             );
             
-            String[] ioList = tempList[3].split(",");
-            
-            for(String io : ioList){
-                newProcess.addIo(Integer.parseInt(io));            
+            if(tempList.length > 3){
+                String[] ioList = tempList[3].split(",");
+                
+                for(String io : ioList){
+                    newProcess.addIo(Integer.parseInt(io));            
+                }
             }
             
             processList.add(newProcess);
