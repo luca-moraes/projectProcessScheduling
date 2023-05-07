@@ -4,8 +4,16 @@
  */
 package model;
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,16 +24,20 @@ import java.util.Scanner;
  */
 public class FileManager {
     public Scanner scan;
+    public BufferedWriter buffWrite;
     public String filePath;
+    public String outputFile = "/home/eu/Documentos/projectProcessScheduling/RoundRobinProcessScheduling/src/controller/saida.txt";
     public List<String> lines;
+    public Charset encoding = Charset.forName("UTF-8");
     
     public FileManager(String path){
         filePath = path;
         this.lines = new ArrayList<>();
+        this.createFile();
     }
     
-    public List<Process> readFile() throws FileNotFoundException{
-        scan = new Scanner(new FileReader(this.filePath))
+    public List<Process> readFile() throws FileNotFoundException, IOException{
+        scan = new Scanner(new FileReader(this.filePath, encoding))
             .useDelimiter("\\n");
         
         while (scan.hasNext()) {
@@ -54,6 +66,35 @@ public class FileManager {
             processList.add(newProcess);
         }
         
+        scan.close();
+        
         return processList;
+    }
+    
+    private void createFile(){
+        try {
+            Path path= Paths.get(this.outputFile);
+            Files.delete(path);
+        }
+        catch (IOException e) {}
+        
+        try {
+            PrintWriter writer = new PrintWriter(this.outputFile, this.encoding);
+            writer.println("Output result: ");
+            writer.close();
+        }
+        catch (IOException e) {}
+    }
+    
+    public void openBuffer() throws IOException{
+      buffWrite = new BufferedWriter(new FileWriter(this.outputFile, encoding));  
+    }
+    
+    public void escritor(String content) throws IOException {
+        buffWrite.append(content);
+    }
+    
+    public void closeBuffer() throws IOException{
+        buffWrite.close();
     }
 }

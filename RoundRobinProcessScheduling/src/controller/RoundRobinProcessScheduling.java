@@ -5,6 +5,7 @@
 package controller;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import model.FileManager;
 import model.RoundRobin;
 
@@ -17,7 +18,7 @@ public class RoundRobinProcessScheduling {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         String filePath;
         int quantum;
         
@@ -28,7 +29,7 @@ public class RoundRobinProcessScheduling {
         
         FileManager fileManager = new FileManager("/home/eu/Documentos/projectProcessScheduling/RoundRobinProcessScheduling/src/controller/teste.txt");
         
-        RoundRobin roundRobin = new RoundRobin(4, fileManager.readFile());
+        RoundRobin roundRobin = new RoundRobin(4, fileManager.readFile(), fileManager);
         
         roundRobin.schedule();
     }

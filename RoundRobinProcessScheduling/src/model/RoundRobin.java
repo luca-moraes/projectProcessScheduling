@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,18 +16,21 @@ import java.util.List;
 public class RoundRobin {
     public List<Process> processList = new ArrayList<>();
     public float quantum;
+    public FileManager fileManager;
     
-    public RoundRobin(float quantum, List<Process> list){
+    public RoundRobin(float quantum, List<Process> list, FileManager fileManager){
         processList = list;
         this.quantum = quantum;
+        this.fileManager = fileManager;
     }
     
     private void orderList(){
         Collections.sort(processList, new ProcessComparator());
     }
     
-    public void schedule(){
+    public void schedule() throws IOException{
         this.orderList();
+        fileManager.openBuffer();
         
         int lastListProcess = 0;
         List<Process> queue = new ArrayList<>();
@@ -92,32 +96,40 @@ public class RoundRobin {
         }
         
         this.printEnd();
+        fileManager.closeBuffer();
     }
     
-    private void printTime(int time){
+    private void printTime(int time) throws IOException{
         System.out.println(String.format("********** TEMPO %d ************** ", time));
+        fileManager.escritor(String.format("********** TEMPO %d ************** \n", time));
     }
     
-    private void printCpu(List<Process> queue, Process cpu){
+    private void printCpu(List<Process> queue, Process cpu) throws IOException{
         System.out.print("FILA: ");
+        fileManager.escritor("FILA: ");
         
         if(!queue.isEmpty()){
             for(Process p : queue){
                 System.out.printf("%s(%d) ", p.pidName, (p.duration - p.timeRunned));
+                fileManager.escritor(String.format("%s(%d) ", p.pidName, (p.duration - p.timeRunned)));
             }
             System.out.println();
+            fileManager.escritor("\n");
         }else{
             System.out.println("Nao ha processos na fila");
+            fileManager.escritor("\n");
         }
         
         if(cpu != null){
             System.out.printf("CPU: %s(%d) \n", cpu.pidName, (cpu.duration - cpu.timeRunned));
+            fileManager.escritor(String.format("CPU: %s(%d) \n", cpu.pidName, (cpu.duration - cpu.timeRunned)));
         }else{
             System.out.println("ACABARAM OS PROCESSOS!!!");
+            fileManager.escritor("ACABARAM OS PROCESSOS!!!\n");
         }
     }
     
-    private void printEvent(int event, Process pEvent){
+    private void printEvent(int event, Process pEvent) throws IOException{
         String eventMsg = " ";
         
         switch(event){
@@ -136,9 +148,11 @@ public class RoundRobin {
         }
         
         System.out.println(eventMsg);
+        fileManager.escritor(eventMsg);
+        fileManager.escritor("\n");
     }
     
-    private void printInit(){
+    private void printInit() throws IOException{
         System.out.println(
                 "***********************************\n" +
                 "***** ESCALONADOR ROUND ROBIN *****\n" +
@@ -146,13 +160,27 @@ public class RoundRobin {
                 "------- INICIANDO SIMULACAO -------\n" +
                 "-----------------------------------"
         );
+        
+        fileManager.escritor(String.format(
+                "***********************************\n" +
+                "***** ESCALONADOR ROUND ROBIN *****\n" +
+                "-----------------------------------\n" +
+                "------- INICIANDO SIMULACAO -------\n" +
+                "-----------------------------------\n"
+        ));
     }
     
-    private void printEnd(){
+    private void printEnd() throws IOException{
         System.out.println(
                 "-----------------------------------\n"+
                 "------- Encerrando simulacao ------\n"+
                 "-----------------------------------"
         );
+        
+        fileManager.escritor(String.format(
+                 "-----------------------------------\n"+
+                "------- Encerrando simulacao ------\n"+
+                "-----------------------------------"
+        ));
     }
 }
