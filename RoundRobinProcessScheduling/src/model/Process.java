@@ -15,9 +15,10 @@ public class Process {
     public String pidName;
     public int duration;
     public int inputTime;
-    public List<Float> ioTimes;
+    public List<Integer> ioTimes;
     public int waitTime;
     public int turnaround;
+    public int timeRunned;
 
     public Process(String name, int duration, int inputTime) {
         this.ioTimes = new ArrayList<>();
@@ -26,9 +27,10 @@ public class Process {
         this.inputTime = inputTime;
         this.waitTime = 0;
         this.turnaround = 0;
+        this.timeRunned = 0;
     }
     
-    public void addIo(float ioTime){
+    public void addIo(int ioTime){
         this.ioTimes.add(ioTime);
     }
 }

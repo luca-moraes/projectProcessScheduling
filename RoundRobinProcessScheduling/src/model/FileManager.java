@@ -45,7 +45,7 @@ public class FileManager {
             String[] ioList = tempList[3].split(",");
             
             for(String io : ioList){
-                newProcess.addIo(Float.parseFloat(io));            
+                newProcess.addIo(Integer.parseInt(io));            
             }
             
             processList.add(newProcess);

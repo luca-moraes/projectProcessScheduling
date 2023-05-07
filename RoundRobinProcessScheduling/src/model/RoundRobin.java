@@ -27,13 +27,73 @@ public class RoundRobin {
     
     public void schedule(){
         this.orderList();
+        
+        int lastListProcess = 0;
         List<Process> queue = new ArrayList<>();
-        Process cpu = processList.get(0);
+        Process cpu = processList.get(lastListProcess);
+        lastListProcess++;
+        
         int time = 0;
+        int pQuantum = 0;
         int event = 0;
         
+        this.printInit();
+        this.printTime(time);
+        this.printCpu(queue, cpu);
         
+        time++;
+        pQuantum++;
+        cpu.timeRunned++;
         
+        while(!queue.isEmpty() && cpu != null){
+            printTime(time);
+            
+            //check if the process have an io operation
+            if(cpu.ioTimes.contains(cpu.timeRunned)){
+                printEvent(0, cpu);
+                queue.add(cpu);
+                cpu = queue.get(0);
+                queue.remove(0);
+                pQuantum = 0;
+            }
+            
+            //check if a new process has arrived
+            if(processList.get(lastListProcess).inputTime == time){
+                printEvent(1, processList.get(lastListProcess));
+                queue.add(processList.get(lastListProcess));
+            }
+            
+            //check if a process has reached the quantum limit
+            if(pQuantum == this.quantum){
+                printEvent(2, cpu);
+                queue.add(cpu);
+                cpu = queue.remove(0);
+                pQuantum = 0;
+            }
+            
+            //check if a process has ended
+            if(cpu.timeRunned == cpu.duration){
+                printEvent(3, cpu);
+                cpu = queue.size() > 0 ? queue.get(0) : null;
+                pQuantum = 0;
+                
+                try{
+                    queue.remove(0);
+                }catch(Exception e){
+                    System.out.println("Lista vazia: "  +e);
+                }
+            }
+            
+            printCpu(queue, cpu);
+            
+            if(cpu != null){
+                cpu.timeRunned++;
+                time++;
+                pQuantum++;
+            }
+        }
+        
+        this.printEnd();
     }
     
     public void printTime(int time){
@@ -43,11 +103,20 @@ public class RoundRobin {
     public void printCpu(List<Process> queue, Process cpu){
         System.out.print("FILA: ");
         
-        for(Process p : queue){
-            System.out.printf("%s (%d) ", p.pidName, p.duration);
+        if(!queue.isEmpty()){
+            for(Process p : queue){
+                System.out.printf("%s (%d) ", p.pidName, (cpu.duration - cpu.timeRunned));
+            }
+            System.out.println();
+        }else{
+            System.out.println("Nao ha processos na fila");
         }
         
-        System.out.printf("\nCPU: %s (%d) ", cpu.pidName, cpu.duration);
+        if(cpu != null){
+            System.out.printf("CPU: %s (%d) \n", cpu.pidName, (cpu.duration - cpu.timeRunned));
+        }else{
+            System.out.println("ACABARAM OS PROCESSOS!!!");
+        }
     }
     
     public void printEvent(int event, Process pEvent){
@@ -55,18 +124,15 @@ public class RoundRobin {
         
         switch(event){
             case 0:
-                eventMsg = "";
+                eventMsg = String.format("#[evento] OPERACAO I/O <%s>", pEvent.pidName);
             break;
             case 1:
                 eventMsg =String.format("#[evento] CHEGADA <%s>", pEvent.pidName);
             break;
             case 2:
-                eventMsg = String.format("#[evento] OPERACAO I/O <%s>", pEvent.pidName);
-            break;
-            case 3:
                 eventMsg = String.format("#[evento] FIM QUANTUM <%s>", pEvent.pidName);
             break;
-            case 4:
+            case 3:
                 eventMsg =String.format("#[evento] ENCERRANDO <%s>", pEvent.pidName);
             break;
         }
