@@ -18,9 +18,17 @@ public class RoundRobinProcessScheduling {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws FileNotFoundException {
+        String filePath;
+        int quantum;
+        
+        if(args.length == 2){
+            quantum = Integer.parseInt(args[0]);
+            filePath = args[1];
+        }
+        
         FileManager fileManager = new FileManager("/home/eu/Documentos/projectProcessScheduling/RoundRobinProcessScheduling/src/controller/teste.txt");
         
-        RoundRobin roundRobin = new RoundRobin(5, fileManager.readFile());
+        RoundRobin roundRobin = new RoundRobin(4, fileManager.readFile());
         
         roundRobin.schedule();
     }

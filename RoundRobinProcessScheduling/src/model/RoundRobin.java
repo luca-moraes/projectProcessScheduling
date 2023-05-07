@@ -35,7 +35,6 @@ public class RoundRobin {
         
         int time = 0;
         int pQuantum = 0;
-        int event = 0;
         
         this.printInit();
         this.printTime(time);
@@ -80,9 +79,7 @@ public class RoundRobin {
                 
                 try{
                     queue.remove(0);
-                }catch(Exception e){
-                    System.out.println("Lista vazia: "  +e);
-                }
+                }catch(Exception e){}
             }
             
             printCpu(queue, cpu);
