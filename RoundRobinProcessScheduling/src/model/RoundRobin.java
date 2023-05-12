@@ -28,6 +28,10 @@ public class RoundRobin {
         Collections.sort(processList, new ProcessComparator());
     }
     
+    private void ordelSJF(){
+        Collections.sort(processList, new SJFComparator());
+    }
+    
     public void schedule() throws IOException{
         this.orderList();
         fileManager.openBuffer();
@@ -92,6 +96,124 @@ public class RoundRobin {
                 cpu.timeRunned++;
                 time++;
                 pQuantum++;
+            }
+        }
+        
+        this.printEnd();
+        fileManager.closeBuffer();
+    }
+    
+    public void fifoSchedule() throws IOException{
+        this.orderList();
+        fileManager.openBuffer();
+        
+        int lastListProcess = 0;
+        List<Process> queue = new ArrayList<>();
+        Process cpu = processList.isEmpty() ? null : processList.get(lastListProcess);
+        lastListProcess++;
+        
+        int time = 0;
+        
+        this.printInit();
+        this.printTime(time);
+        this.printCpu(queue, cpu);
+        
+        time++;
+        cpu.timeRunned++;
+        
+        while(cpu != null){
+            printTime(time);
+            
+            //check if the process have an io operation
+            if(cpu.ioTimes.contains(cpu.timeRunned)){
+                printEvent(0, cpu);
+                queue.add(cpu);
+                cpu = queue.get(0);
+                queue.remove(0);
+            }
+            
+            //check if a new process has arrived
+            if(processList.get(lastListProcess).inputTime == time){
+                printEvent(1, processList.get(lastListProcess));
+                queue.add(processList.get(lastListProcess));
+                lastListProcess = lastListProcess == processList.size() - 1 ? lastListProcess : lastListProcess + 1;
+            }
+            
+            //check if a process has ended
+            if(cpu.timeRunned == cpu.duration){
+                printEvent(3, cpu);
+                cpu = queue.size() > 0 ? queue.get(0) : null;
+                
+                try{
+                    queue.remove(0);
+                }catch(Exception e){}
+            }
+            
+            printCpu(queue, cpu);
+            
+            if(cpu != null){
+                cpu.timeRunned++;
+                time++;
+            }
+        }
+        
+        this.printEnd();
+        fileManager.closeBuffer();
+    }
+    
+    public void sjfSchedule() throws IOException{
+        this.orderList();
+        fileManager.openBuffer();
+        
+        int lastListProcess = 0;
+        List<Process> queue = new ArrayList<>();
+        Process cpu = processList.isEmpty() ? null : processList.get(lastListProcess);
+        lastListProcess++;
+        
+        int time = 0;
+        
+        this.printInit();
+        this.printTime(time);
+        this.printCpu(queue, cpu);
+        
+        time++;
+        cpu.timeRunned++;
+        
+        while(cpu != null){
+            printTime(time);
+            
+            //check if the process have an io operation
+            if(cpu.ioTimes.contains(cpu.timeRunned)){
+                printEvent(0, cpu);
+                Collections.sort(queue, new SJFComparator());
+                queue.add(cpu);
+                cpu = queue.get(0);
+                queue.remove(0);
+            }
+            
+            //check if a new process has arrived
+            if(processList.get(lastListProcess).inputTime == time){
+                printEvent(1, processList.get(lastListProcess));
+                queue.add(processList.get(lastListProcess));
+                lastListProcess = lastListProcess == processList.size() - 1 ? lastListProcess : lastListProcess + 1;
+            }
+            
+            //check if a process has ended
+            if(cpu.timeRunned == cpu.duration){
+                printEvent(3, cpu);
+                Collections.sort(queue, new SJFComparator());
+                cpu = queue.size() > 0 ? queue.get(0) : null;
+                
+                try{
+                    queue.remove(0);
+                }catch(Exception e){}
+            }
+            
+            printCpu(queue, cpu);
+            
+            if(cpu != null){
+                cpu.timeRunned++;
+                time++;
             }
         }
         

@@ -26,7 +26,7 @@ public class FileManager {
     public Scanner scan;
     public BufferedWriter buffWrite;
     public String filePath;
-    public String outputFile = "/home/eu/Documentos/projectProcessScheduling/RoundRobinProcessScheduling/src/controller/saida.txt";
+    public String outputFile = "C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\controller\\saida.txt";
     public List<String> lines;
     public Charset encoding = Charset.forName("UTF-8");
     

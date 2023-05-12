@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="RoundRobinProcessScheduling">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/RoundRobinProcessScheduling.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
