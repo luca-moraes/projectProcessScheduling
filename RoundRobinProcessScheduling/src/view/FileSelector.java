@@ -9,6 +9,9 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -28,6 +31,8 @@ public class FileSelector extends javax.swing.JFrame {
     public FileSelector(Controller ctrl) {
         initComponents();
         control = ctrl;
+        
+        this.jFileChooser1.setFileSelectionMode(JFileChooser.FILES_ONLY);
         
 //        disableNewFolderButton(this.jFileChooser1);;
 //        this.jFileChooser1.showOpenDialog(null);
@@ -96,9 +101,29 @@ public class FileSelector extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            this.setPaths();
+        } catch (IOException ex) {
+            Logger.getLogger(FileSelector.class.getName()).log(Level.SEVERE, null, ex);
+        }
         control.fecharFiles();
     }//GEN-LAST:event_jFileChooser1ActionPerformed
+
+    private void setPaths() throws IOException{
+        if(this.jFileChooser1.APPROVE_OPTION == 0) {
+            this.filePath = this.jFileChooser1.getSelectedFile().getAbsolutePath();
+            this.outputPath = this.jFileChooser1.getCurrentDirectory().getAbsolutePath();
+        }
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+    
+    public String getOutputPath() {
+        return outputPath;
+    }
 
     /**
      * @param args the command line arguments
@@ -139,6 +164,8 @@ public class FileSelector extends javax.swing.JFrame {
         return jFileChooser1;
     }
 
+    private String filePath;
+    private String outputPath;
     private Controller control;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser jFileChooser1;

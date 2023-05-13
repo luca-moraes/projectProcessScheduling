@@ -18,6 +18,8 @@ public class Controller {
       private Input janelaInput;
       private FileSelector janelaFiles;
       private int quantum;
+      private String inputFilePath;
+      private String outputFilesPath;
     
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int screenHeight = screenSize.height/2;
@@ -47,11 +49,14 @@ public class Controller {
     
      public void fecharFiles(){
         try{
+            this.inputFilePath = this.janelaFiles.getFilePath();            
+            this.outputFilesPath = this.janelaFiles.getOutputPath();
+            
             this.janelaFiles.dispose();
         }catch(Exception e){}
         
         this.janelaInput.setVisible(true);
-        this.janelaInput.setjLabelPath(String.format("%.10s", "Exemplo de arquivo para testes") + "...");
+        this.janelaInput.setjTextPanelSaida(String.format("Arquivo: %s \nDiretório de saída: %s", this.inputFilePath, this.outputFilesPath) );
         
 //        Input janelaInput = new Input();
 //        janelaInput.setBounds((screenWidth-(janelaInput.getWidth()/2)),(screenHeight-(janelaInput.getHeight()/2)),janelaInput.getWidth(),janelaInput.getHeight());
