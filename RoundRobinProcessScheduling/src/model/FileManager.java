@@ -26,7 +26,8 @@ public class FileManager {
     public Scanner scan;
     public BufferedWriter buffWrite;
     public String filePath;
-    public String outputFile = "C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\controller\\saida.txt";
+    public String escalonadorFile = "C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\files\\saida.txt";
+    public String graficoFile = "C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\files\\grafico.txt";
     public List<String> lines;
     public Charset encoding = Charset.forName("UTF-8");
     
@@ -73,28 +74,28 @@ public class FileManager {
     
     private void createFile(){
         try {
-            Path path= Paths.get(this.outputFile);
+            Path path= Paths.get(this.escalonadorFile);
             Files.delete(path);
         }
         catch (IOException e) {}
         
         try {
-            PrintWriter writer = new PrintWriter(this.outputFile, this.encoding);
+            PrintWriter writer = new PrintWriter(this.escalonadorFile, this.encoding);
             writer.println("Output result: ");
             writer.close();
         }
         catch (IOException e) {}
     }
     
-    public void openBuffer() throws IOException{
-      buffWrite = new BufferedWriter(new FileWriter(this.outputFile, encoding));  
-    }
-    
-    public void escritor(String content) throws IOException {
+    public void fileEscalonador(String content) throws IOException{
+        buffWrite = new BufferedWriter(new FileWriter(this.escalonadorFile, encoding));
         buffWrite.append(content);
+        buffWrite.close();
     }
     
-    public void closeBuffer() throws IOException{
+    public void fileGrafico(String content) throws IOException{
+        buffWrite = new BufferedWriter(new FileWriter(this.graficoFile, encoding));
+        buffWrite.append(content);
         buffWrite.close();
     }
 }

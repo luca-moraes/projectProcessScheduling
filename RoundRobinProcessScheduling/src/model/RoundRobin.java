@@ -17,6 +17,8 @@ public class RoundRobin {
     public List<Process> processList = new ArrayList<>();
     public float quantum;
     public FileManager fileManager;
+    public StringBuilder saidaEscalonador = new StringBuilder();
+    public StringBuilder saidaGrafico = new StringBuilder();
     
     public RoundRobin(float quantum, List<Process> list, FileManager fileManager){
         processList = list;
@@ -32,9 +34,14 @@ public class RoundRobin {
         Collections.sort(processList, new SJFComparator());
     }
     
+    private void incrementarTempoMedio(List<Process> queue){
+        for(Process p : this.processList){
+            p.waitTime += queue.contains(p) ? 1 : 0;
+        }
+    }
+    
     public void schedule() throws IOException{
         this.orderList();
-        fileManager.openBuffer();
         
         int lastListProcess = 0;
         List<Process> queue = new ArrayList<>();
@@ -44,9 +51,14 @@ public class RoundRobin {
         int time = 0;
         int pQuantum = 0;
         
-        this.printInit();
+        //file escalonador
+        this.printInit("ROUND ROBIN");
         this.printTime(time);
         this.printCpu(queue, cpu);
+        
+        //file grafico
+        this.printInitGrafico("ROUND ROBIN");
+        this.printProcessoGrafico(time, cpu);
         
         time++;
         pQuantum++;
@@ -62,6 +74,8 @@ public class RoundRobin {
                 cpu = queue.get(0);
                 queue.remove(0);
                 pQuantum = 0;
+                
+                this.printProcessoGrafico(time, cpu);
             }
             
             //check if a new process has arrived
@@ -77,6 +91,8 @@ public class RoundRobin {
                 queue.add(cpu);
                 cpu = queue.remove(0);
                 pQuantum = 0;
+                
+                this.printProcessoGrafico(time, cpu);
             }
             
             //check if a process has ended
@@ -84,6 +100,8 @@ public class RoundRobin {
                 printEvent(3, cpu);
                 cpu = queue.size() > 0 ? queue.get(0) : null;
                 pQuantum = 0;
+                
+                this.printProcessoGrafico(time, cpu);
                 
                 try{
                     queue.remove(0);
@@ -96,16 +114,22 @@ public class RoundRobin {
                 cpu.timeRunned++;
                 time++;
                 pQuantum++;
+                this.incrementarTempoMedio(queue);
             }
         }
         
+        //file escalonador
         this.printEnd();
-        fileManager.closeBuffer();
+        
+        //file grafico
+        this.printEndGrafico();
+        
+        this.salvarEscalondor();
+        this.salvarGrafico();
     }
     
     public void fifoSchedule() throws IOException{
         this.orderList();
-        fileManager.openBuffer();
         
         int lastListProcess = 0;
         List<Process> queue = new ArrayList<>();
@@ -114,9 +138,14 @@ public class RoundRobin {
         
         int time = 0;
         
-        this.printInit();
+        //file escalonador
+        this.printInit("FIFO");
         this.printTime(time);
         this.printCpu(queue, cpu);
+        
+        //file grafico
+        this.printInitGrafico("FIFO");
+        this.printProcessoGrafico(time, cpu);
         
         time++;
         cpu.timeRunned++;
@@ -130,6 +159,8 @@ public class RoundRobin {
                 queue.add(cpu);
                 cpu = queue.get(0);
                 queue.remove(0);
+                
+                this.printProcessoGrafico(time, cpu);
             }
             
             //check if a new process has arrived
@@ -144,6 +175,8 @@ public class RoundRobin {
                 printEvent(3, cpu);
                 cpu = queue.size() > 0 ? queue.get(0) : null;
                 
+                this.printProcessoGrafico(time, cpu);
+                
                 try{
                     queue.remove(0);
                 }catch(Exception e){}
@@ -154,16 +187,23 @@ public class RoundRobin {
             if(cpu != null){
                 cpu.timeRunned++;
                 time++;
+                
+                this.incrementarTempoMedio(queue);
             }
         }
         
+        //file escalonador
         this.printEnd();
-        fileManager.closeBuffer();
+        
+        //file grafico
+        this.printEndGrafico();
+        
+        this.salvarEscalondor();
+        this.salvarGrafico();
     }
     
     public void sjfSchedule() throws IOException{
         this.orderList();
-        fileManager.openBuffer();
         
         int lastListProcess = 0;
         List<Process> queue = new ArrayList<>();
@@ -172,9 +212,14 @@ public class RoundRobin {
         
         int time = 0;
         
-        this.printInit();
+        //file escalonador
+        this.printInit("SJF");
         this.printTime(time);
         this.printCpu(queue, cpu);
+        
+        //file grafico
+        this.printInitGrafico("SJF");
+        this.printProcessoGrafico(time, cpu);
         
         time++;
         cpu.timeRunned++;
@@ -189,6 +234,8 @@ public class RoundRobin {
                 queue.add(cpu);
                 cpu = queue.get(0);
                 queue.remove(0);
+                
+                this.printProcessoGrafico(time, cpu);
             }
             
             //check if a new process has arrived
@@ -204,6 +251,8 @@ public class RoundRobin {
                 Collections.sort(queue, new SJFComparator());
                 cpu = queue.size() > 0 ? queue.get(0) : null;
                 
+                this.printProcessoGrafico(time, cpu);
+                
                 try{
                     queue.remove(0);
                 }catch(Exception e){}
@@ -214,40 +263,50 @@ public class RoundRobin {
             if(cpu != null){
                 cpu.timeRunned++;
                 time++;
+                
+                this.incrementarTempoMedio(queue);
             }
         }
         
+        //file escalonador
         this.printEnd();
-        fileManager.closeBuffer();
+        
+        //file grafico
+        this.printEndGrafico();
+        
+        this.salvarEscalondor();
+        this.salvarGrafico();
+    }
+    
+    public void salvarEscalondor() throws IOException{
+        fileManager.fileEscalonador(this.saidaEscalonador.toString());
+    }
+    
+    public void salvarGrafico() throws IOException{
+        fileManager.fileGrafico(this.saidaGrafico.toString());
     }
     
     private void printTime(int time) throws IOException{
-        System.out.println(String.format("********** TEMPO %d ************** ", time));
-        fileManager.escritor(String.format("********** TEMPO %d ************** \n", time));
+        this.saidaEscalonador.append(String.format("********** TEMPO %d **************\n", time));
     }
     
     private void printCpu(List<Process> queue, Process cpu) throws IOException{
-        System.out.print("FILA: ");
-        fileManager.escritor("FILA: ");
+        this.saidaEscalonador.append("FILA: ");
         
         if(!queue.isEmpty()){
             for(Process p : queue){
-                System.out.printf("%s(%d) ", p.pidName, (p.duration - p.timeRunned));
-                fileManager.escritor(String.format("%s(%d) ", p.pidName, (p.duration - p.timeRunned)));
+                this.saidaEscalonador.append(String.format("%s(%d) ", p.pidName, (p.duration - p.timeRunned)));
             }
-            System.out.println();
-            fileManager.escritor("\n");
+            this.saidaEscalonador.append("\n");
         }else{
-            System.out.println("Nao ha processos na fila");
-            fileManager.escritor("\n");
+            this.saidaEscalonador.append("Nao ha processos na fila");
+            this.saidaEscalonador.append("\n");
         }
         
         if(cpu != null){
-            System.out.printf("CPU: %s(%d) \n", cpu.pidName, (cpu.duration - cpu.timeRunned));
-            fileManager.escritor(String.format("CPU: %s(%d) \n", cpu.pidName, (cpu.duration - cpu.timeRunned)));
+            this.saidaEscalonador.append(String.format("CPU: %s(%d) \n", cpu.pidName, (cpu.duration - cpu.timeRunned)));
         }else{
-            System.out.println("ACABARAM OS PROCESSOS!!!");
-            fileManager.escritor("ACABARAM OS PROCESSOS!!!\n");
+            this.saidaEscalonador.append("ACABARAM OS PROCESSOS!!!\n");
         }
     }
     
@@ -259,50 +318,59 @@ public class RoundRobin {
                 eventMsg = String.format("#[evento] OPERACAO I/O <%s>", pEvent.pidName);
             break;
             case 1:
-                eventMsg =String.format("#[evento] CHEGADA <%s>", pEvent.pidName);
+                eventMsg = String.format("#[evento] CHEGADA <%s>", pEvent.pidName);
             break;
             case 2:
                 eventMsg = String.format("#[evento] FIM QUANTUM <%s>", pEvent.pidName);
             break;
             case 3:
-                eventMsg =String.format("#[evento] ENCERRANDO <%s>", pEvent.pidName);
+                eventMsg = String.format("#[evento] ENCERRANDO <%s>", pEvent.pidName);
             break;
         }
         
-        System.out.println(eventMsg);
-        fileManager.escritor(eventMsg);
-        fileManager.escritor("\n");
+        this.saidaEscalonador.append(eventMsg);
+        this.saidaEscalonador.append("\n");
     }
     
-    private void printInit() throws IOException{
-        System.out.println(
-                "***********************************\n" +
-                "***** ESCALONADOR ROUND ROBIN *****\n" +
+    private void printInit(String tipo) throws IOException{
+        this.saidaEscalonador.append("***********************************\n");
+        this.saidaEscalonador.append(String.format("***** ESCALONADOR %s *****\n", tipo));
+        this.saidaEscalonador.append (
                 "-----------------------------------\n" +
                 "------- INICIANDO SIMULACAO -------\n" +
-                "-----------------------------------"
+                "-----------------------------------\n"  
         );
-        
-        fileManager.escritor(String.format(
-                "***********************************\n" +
-                "***** ESCALONADOR ROUND ROBIN *****\n" +
-                "-----------------------------------\n" +
-                "------- INICIANDO SIMULACAO -------\n" +
-                "-----------------------------------\n"
-        ));
     }
     
     private void printEnd() throws IOException{
-        System.out.println(
+        this.saidaEscalonador.append(
                 "-----------------------------------\n"+
                 "------- Encerrando simulacao ------\n"+
                 "-----------------------------------"
         );
+    }
+    
+    private void printInitGrafico(String tipo) throws IOException{
+        this.saidaGrafico.append(String.format("****** GRÁFICO DO ESCALONADOR %s******\n", tipo));
+    }
+    
+    private void printProcessoGrafico(int tempInit, Process cpu) throws IOException{
+        if(cpu != null){
+            this.saidaGrafico.append(String.format("|(%d)%s ", tempInit, cpu.pidName));
+        }
+    }
+
+    private void printEndGrafico() throws IOException{
+        this.saidaGrafico.append("| \nTempo de espera de cada processo:\n");
+        float tempMedio = 0;
         
-        fileManager.escritor(String.format(
-                 "-----------------------------------\n"+
-                "------- Encerrando simulacao ------\n"+
-                "-----------------------------------"
-        ));
+        for(Process p : this.processList){
+            this.saidaGrafico.append(String.format("%s: %d\n", p.pidName, p.waitTime));
+            tempMedio += p.waitTime;
+        }
+        
+        tempMedio /= this.processList.size();
+        
+        this.saidaGrafico.append(String.format("Tempo de espera médio: %.2f", tempMedio));
     }
 }

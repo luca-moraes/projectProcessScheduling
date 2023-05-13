@@ -23,7 +23,6 @@ public class RoundRobinProcessScheduling {
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
         
-        
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int screenHeight = screenSize.height/2;
         int screenWidth = screenSize.width/2;
@@ -33,7 +32,6 @@ public class RoundRobinProcessScheduling {
         janela.setBounds((screenWidth-(janela.getWidth()/2)),(screenHeight-(janela.getHeight()/2)),janela.getWidth(),janela.getHeight());
         janela.setVisible(true);
         
-        /*
         String filePath;
         int quantum;
         
@@ -42,22 +40,24 @@ public class RoundRobinProcessScheduling {
             filePath = args[1];
         }
         
-        FileManager fileManager1 = new FileManager("C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\controller\\teste.txt");
-        FileManager fileManager2 = new FileManager("C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\controller\\teste.txt");
-        FileManager fileManager3 = new FileManager("C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\controller\\teste.txt");
-
-        fileManager2.outputFile = "C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\controller\\saida2.txt";
-        fileManager3.outputFile = "C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\controller\\saida3.txt";
-
+//        FileManager fileManager1 = new FileManager("C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\files\\teste.txt");
+//        FileManager fileManager2 = new FileManager("C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\files\\teste.txt");
+//        FileManager fileManager3 = new FileManager("C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\files\\teste.txt");
+//
+//        fileManager2.escalonadorFile = "C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\files\\saidaFifo.txt";
+//        fileManager3.escalonadorFile = "C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\files\\saidaSjf.txt";
+//        
+//        fileManager2.graficoFile = "C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\files\\graficoFifo.txt";
+//        fileManager3.graficoFile = "C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\files\\graficoSjf.txt";
+//        
+//        RoundRobin roundRobin1 = new RoundRobin(4, fileManager1.readFile(), fileManager1);
+//        RoundRobin roundRobin2 = new RoundRobin(4, fileManager2.readFile(), fileManager2);
+//        RoundRobin roundRobin3 = new RoundRobin(4, fileManager3.readFile(), fileManager3);
+//        
+//        roundRobin1.schedule();
+//        roundRobin2.fifoSchedule();
+//        roundRobin3.sjfSchedule();
         
-        RoundRobin roundRobin1 = new RoundRobin(4, fileManager1.readFile(), fileManager1);
-        RoundRobin roundRobin2 = new RoundRobin(4, fileManager2.readFile(), fileManager2);
-        RoundRobin roundRobin3 = new RoundRobin(4, fileManager3.readFile(), fileManager3);
-        
-        roundRobin1.schedule();
-        roundRobin2.fifoSchedule();
-        roundRobin3.sjfSchedule();
-        */
     }
     
 }

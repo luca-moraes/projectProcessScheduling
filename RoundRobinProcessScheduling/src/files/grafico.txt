@@ -1,0 +1,9 @@
+******ESCALONADOR ROUND ROBIN******
+|(0)P3 |(2)P4 |(5)P3 |(8)P2 |(12)P4 |(15)P1 |(17)P2 |(18)P4 |(19)P1 |(21)P5 |(23)P2 |(27)P1 |(29)P2 |(30)P1 |(32)P1 | 
+Tempo de espera de cada processo:
+P3: 3
+P4: 11
+P2: 16
+P1: 14
+P5: 4
+Tempo de espera médio: 9,60

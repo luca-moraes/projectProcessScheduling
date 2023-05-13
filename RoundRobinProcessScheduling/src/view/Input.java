@@ -5,6 +5,10 @@
 package view;
 
 import controller.Controller;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 /**
  *
@@ -31,10 +35,10 @@ public class Input extends javax.swing.JFrame {
 
         jLabel3 = new javax.swing.JLabel();
         quantumField = new javax.swing.JTextField();
-        fileNameField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButtonArchives = new javax.swing.JButton();
+        jLabelPath = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,18 +46,18 @@ public class Input extends javax.swing.JFrame {
 
         quantumField.setForeground(new java.awt.Color(102, 102, 102));
         quantumField.setText("Digite um valor");
-
-        fileNameField.setForeground(new java.awt.Color(102, 102, 102));
-        fileNameField.setText("Informe o arquivo");
-        fileNameField.addActionListener(new java.awt.event.ActionListener() {
+        quantumField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                quantumFieldMouseClicked(evt);
+            }
+        });
+        quantumField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fileNameFieldActionPerformed(evt);
+                quantumFieldActionPerformed(evt);
             }
         });
 
         jLabel1.setText("Quantum:");
-
-        jLabel2.setText("File Name:");
 
         jButton1.setLabel("Run");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -62,62 +66,101 @@ public class Input extends javax.swing.JFrame {
             }
         });
 
+        jButtonArchives.setText("Selecione um arquivo");
+        jButtonArchives.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonArchivesActionPerformed(evt);
+            }
+        });
+
+        jLabelPath.setText("Arquivo Selecionado");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(jLabel3)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(jButtonArchives))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(153, 153, 153)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelPath)
+                            .addComponent(jButton1))))
+                .addContainerGap(148, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(68, 68, 68)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel1))
-                            .addGap(48, 48, 48)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(quantumField)
-                                .addComponent(fileNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(76, 76, 76)
-                            .addComponent(jButton1)))
-                    .addContainerGap(69, Short.MAX_VALUE)))
+                    .addGap(70, 70, 70)
+                    .addComponent(jLabel1)
+                    .addGap(48, 48, 48)
+                    .addComponent(quantumField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(105, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jLabel3)
-                .addContainerGap(258, Short.MAX_VALUE))
+                .addGap(110, 110, 110)
+                .addComponent(jButtonArchives, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelPath)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(25, 25, 25))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(91, 91, 91)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(quantumField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1))
-                    .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(fileNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2))
-                    .addGap(18, 18, 18)
-                    .addComponent(jButton1)
-                    .addContainerGap(92, Short.MAX_VALUE)))
+                    .addContainerGap(239, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fileNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileNameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fileNameFieldActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButtonArchivesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonArchivesActionPerformed
+        // TODO add your handling code here:
+        control.mostarFiles();
+    }//GEN-LAST:event_jButtonArchivesActionPerformed
+
+    private void quantumFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quantumFieldMouseClicked
+        // TODO add your handling code here:
+        if(!clicked){
+            quantumField.setText("");
+            clicked = true;
+        }
+    }//GEN-LAST:event_quantumFieldMouseClicked
+
+    private void quantumFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantumFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quantumFieldActionPerformed
+    
+    public JTextField getQuantumField() {
+        return quantumField;
+    }
+
+    public JLabel getjLabelPath() {
+        return jLabelPath;
+    }
+
+    public void setjLabelPath(String text) {
+        this.jLabelPath.setText(text);
+    }
+
+    public void setQuantumField(String text) {
+        this.quantumField.setText(text);
+    }
 
     /**
      * @param args the command line arguments
@@ -155,13 +198,14 @@ public class Input extends javax.swing.JFrame {
     }
 
     private Controller control;
+    private boolean clicked = false;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTextField fileNameField;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonArchives;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelPath;
     public javax.swing.JTextField quantumField;
     // End of variables declaration//GEN-END:variables
 }
