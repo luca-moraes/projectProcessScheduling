@@ -26,13 +26,15 @@ public class FileManager {
     public Scanner scan;
     public BufferedWriter buffWrite;
     public String filePath;
-    public String escalonadorFile = "C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\files\\saida.txt";
-    public String graficoFile = "C:\\Users\\unielumoraes\\Downloads\\projectProcessScheduling-main\\RoundRobinProcessScheduling\\src\\files\\grafico.txt";
+    public String escalonadorFile;
+    public String graficoFile;
     public List<String> lines;
     public Charset encoding = Charset.forName("UTF-8");
     
-    public FileManager(String path){
+    public FileManager(String path, String outputFilePath, String outputGraphPath){
         filePath = path;
+        escalonadorFile = outputFilePath;
+        graficoFile = outputGraphPath;
         this.lines = new ArrayList<>();
         this.createFile();
     }
@@ -75,14 +77,17 @@ public class FileManager {
     private void createFile(){
         try {
             Path path= Paths.get(this.escalonadorFile);
+            Path gPath= Paths.get(this.graficoFile);
             Files.delete(path);
+            Files.delete(gPath);
         }
         catch (IOException e) {}
         
         try {
             PrintWriter writer = new PrintWriter(this.escalonadorFile, this.encoding);
-            writer.println("Output result: ");
+            PrintWriter gWriter = new PrintWriter(this.graficoFile, this.encoding);
             writer.close();
+            gWriter.close();
         }
         catch (IOException e) {}
     }

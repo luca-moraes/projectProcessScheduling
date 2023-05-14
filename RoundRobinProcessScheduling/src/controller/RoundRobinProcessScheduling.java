@@ -28,6 +28,9 @@ public class RoundRobinProcessScheduling {
         if(args.length == 2){
             quantum = Integer.parseInt(args[0]);
             filePath = args[1];
+            
+            Controller control = new Controller();
+            control.lineExecute(quantum, filePath);
         }else{
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             int screenHeight = screenSize.height/2;
@@ -35,10 +38,9 @@ public class RoundRobinProcessScheduling {
 
 
             Input janela = new Input();
-            janela.setBounds((screenWidth-(janela.getWidth()/2)),(screenHeight-(janela.getHeight()/2)),janela.getWidth(),janela.getHeight());
             janela.setTitle("Scheduling Interface");
+            janela.setBounds((screenWidth-(janela.getWidth()/2)),(screenHeight-(janela.getHeight()/2)),janela.getWidth(),janela.getHeight());
             janela.setVisible(true);
         }
     }
-    
 }
