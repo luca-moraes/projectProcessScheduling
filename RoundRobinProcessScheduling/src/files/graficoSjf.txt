@@ -1,9 +1,11 @@
 ****** GRÁFICO DO ESCALONADOR SJF******
-|(0)P3 |(2)P4 |(5)P3 |(8)P4 |(11)P1 |(13)P4 |(14)P1 |(16)P2 |(21)P5 |(23)P1 |(25)P2 |(30)P1 |(32)P1 | 
+|(0)P1 |(2)P7 |(3)P3 |(4)P4 |(5)P1 |(8)P4 |(11)P2 |(13)P1 |(15)P5 |(22)P6 |(27)P1 |(28)P5 |(30)P7 |(31)P7 |(33)P7 |(36)P7 |(37)P7 |(39)P7 | 
 Tempo de espera de cada processo:
-P3: 3
-P4: 6
-P2: 16
-P1: 14
-P5: 4
-Tempo de espera médio: 8,60
+P1: 20
+P7: 28
+P3: 1
+P4: 4
+P5: 13
+P2: 2
+P6: 2
+Tempo de espera médio: 10,00

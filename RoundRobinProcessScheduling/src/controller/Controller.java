@@ -54,7 +54,7 @@ public class Controller {
         int secTime = time*1000;
         
         FileManager fileManager1 = new FileManager(this.inputFilePath, this.outputFilesPath + "/saidaRR.txt", this.outputFilesPath + "/graficoRR.txt");
-        FileManager fileManager2 = new FileManager(this.inputFilePath, this.outputFilesPath + "/saidaFifo.txt", this.outputFilesPath + "/graficoFIfo.txt");
+        FileManager fileManager2 = new FileManager(this.inputFilePath, this.outputFilesPath + "/saidaFifo.txt", this.outputFilesPath + "/graficoFifo.txt");
         FileManager fileManager3 = new FileManager(this.inputFilePath, this.outputFilesPath + "/saidaSjf.txt", this.outputFilesPath + "/graficoSjf.txt");
         
         RoundRobin roundRobin1 = new RoundRobin(this.quantum, fileManager1.readFile(), fileManager1);
