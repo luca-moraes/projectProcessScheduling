@@ -68,6 +68,24 @@ public class RoundRobin {
         while(cpu != null){
             printTime(time);
             
+            //check if a process has ended
+            if(cpu.timeRunned == cpu.duration){
+                printEvent(3, cpu);
+                cpu = queue.size() > 0 ? queue.get(0) : null;
+                pQuantum = 0;
+                
+                this.printProcessoGrafico(time, cpu);
+                
+                try{
+                    queue.remove(0);
+                }catch(Exception e){}
+                
+                if (cpu==null){
+                    printCpu(queue, cpu);
+                    break;
+                }  
+            }
+            
             //check if the process have an io operation
             if(cpu.ioTimes.contains(cpu.timeRunned)){
                 printEvent(0, cpu);
@@ -94,19 +112,6 @@ public class RoundRobin {
                 pQuantum = 0;
                 
                 this.printProcessoGrafico(time, cpu);
-            }
-            
-            //check if a process has ended
-            if(cpu.timeRunned == cpu.duration){
-                printEvent(3, cpu);
-                cpu = queue.size() > 0 ? queue.get(0) : null;
-                pQuantum = 0;
-                
-                this.printProcessoGrafico(time, cpu);
-                
-                try{
-                    queue.remove(0);
-                }catch(Exception e){}
             }
             
             printCpu(queue, cpu);
@@ -155,6 +160,23 @@ public class RoundRobin {
         while(cpu != null){
             printTime(time);
             
+            //check if a process has ended
+            if(cpu.timeRunned == cpu.duration){
+                printEvent(3, cpu);
+                cpu = queue.size() > 0 ? queue.get(0) : null;
+                
+                this.printProcessoGrafico(time, cpu);
+                
+                try{
+                    queue.remove(0);
+                }catch(Exception e){}
+                
+                if (cpu==null){
+                    printCpu(queue, cpu);
+                    break;
+                }  
+            }
+            
             //check if the process have an io operation
             if(cpu.ioTimes.contains(cpu.timeRunned)){
                 printEvent(0, cpu);
@@ -170,18 +192,6 @@ public class RoundRobin {
                 printEvent(1, processList.get(lastListProcess));
                 queue.add(processList.get(lastListProcess));
                 lastListProcess = lastListProcess == processList.size() - 1 ? lastListProcess : lastListProcess + 1;
-            }
-            
-            //check if a process has ended
-            if(cpu.timeRunned == cpu.duration){
-                printEvent(3, cpu);
-                cpu = queue.size() > 0 ? queue.get(0) : null;
-                
-                this.printProcessoGrafico(time, cpu);
-                
-                try{
-                    queue.remove(0);
-                }catch(Exception e){}
             }
             
             printCpu(queue, cpu);
@@ -230,6 +240,24 @@ public class RoundRobin {
         while(cpu != null){
             printTime(time);
             
+            //check if a process has ended
+            if(cpu.timeRunned == cpu.duration){
+                printEvent(3, cpu);
+                Collections.sort(queue, new SJFComparator());
+                cpu = queue.size() > 0 ? queue.get(0) : null;
+                
+                this.printProcessoGrafico(time, cpu);
+                
+                try{
+                    queue.remove(0);
+                }catch(Exception e){}
+                
+                if (cpu==null){
+                    printCpu(queue, cpu);
+                    break;
+                }  
+            }
+            
             //check if the process have an io operation
             if(cpu.ioTimes.contains(cpu.timeRunned)){
                 printEvent(0, cpu);
@@ -246,19 +274,6 @@ public class RoundRobin {
                 printEvent(1, processList.get(lastListProcess));
                 queue.add(processList.get(lastListProcess));
                 lastListProcess = lastListProcess == processList.size() - 1 ? lastListProcess : lastListProcess + 1;
-            }
-            
-            //check if a process has ended
-            if(cpu.timeRunned == cpu.duration){
-                printEvent(3, cpu);
-                Collections.sort(queue, new SJFComparator());
-                cpu = queue.size() > 0 ? queue.get(0) : null;
-                
-                this.printProcessoGrafico(time, cpu);
-                
-                try{
-                    queue.remove(0);
-                }catch(Exception e){}
             }
             
             printCpu(queue, cpu);
