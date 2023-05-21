@@ -6,4 +6,4 @@ P4: 16
 P2: 9
 P1: 14
 P5: 7
-Tempo de espera médio: 9,80
+Tempo de espera médio: 9.80

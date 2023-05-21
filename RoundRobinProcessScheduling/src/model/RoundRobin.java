@@ -65,36 +65,8 @@ public class RoundRobin {
         pQuantum++;
         cpu.timeRunned++;
         
-        while(cpu != null){
+        while(cpu != null){                   
             printTime(time);
-            
-            //check if the process have an io operation
-            if(cpu.ioTimes.contains(cpu.timeRunned)){
-                printEvent(0, cpu);
-                queue.add(cpu);
-                cpu = queue.get(0);
-                queue.remove(0);
-                pQuantum = 0;
-                
-                this.printProcessoGrafico(time, cpu);
-            }
-            
-            //check if a new process has arrived
-            if(processList.get(lastListProcess).inputTime == time){
-                printEvent(1, processList.get(lastListProcess));
-                queue.add(processList.get(lastListProcess));
-                lastListProcess = lastListProcess == processList.size() - 1 ? lastListProcess : lastListProcess + 1;
-            }
-            
-            //check if a process has reached the quantum limit
-            if(pQuantum == this.quantum){
-                printEvent(2, cpu);
-                queue.add(cpu);
-                cpu = queue.remove(0);
-                pQuantum = 0;
-                
-                this.printProcessoGrafico(time, cpu);
-            }
             
             //check if a process has ended
             if(cpu.timeRunned == cpu.duration){
@@ -107,10 +79,42 @@ public class RoundRobin {
                 try{
                     queue.remove(0);
                 }catch(Exception e){}
+                
+                if (cpu==null){
+                    printCpu(queue, cpu);
+                    break;
+                }  
+            }
+            
+            //check if a process has reached the quantum limit
+            if(pQuantum == this.quantum){
+                printEvent(2, cpu);
+                queue.add(cpu);
+                cpu = queue.remove(0);
+                pQuantum = 0;
+                
+                this.printProcessoGrafico(time, cpu);
+            }
+            
+            //check if the process have an io operation
+            if(cpu.ioTimes.contains(cpu.timeRunned)){
+                cpu.ioTimes.remove(0);
+                printEvent(0, cpu);
+                queue.add(cpu);
+                cpu = queue.get(0);
+                queue.remove(0);
+                pQuantum = 0;
+                this.printProcessoGrafico(time, cpu);
+            }
+            
+            //check if a new process has arrived
+            if(processList.get(lastListProcess).inputTime == time){
+                printEvent(1, processList.get(lastListProcess));
+                queue.add(processList.get(lastListProcess));
+                lastListProcess = lastListProcess == processList.size() - 1 ? lastListProcess : lastListProcess + 1;
             }
             
             printCpu(queue, cpu);
-            
             if(cpu != null){
                 cpu.timeRunned++;
                 time++;
