@@ -84,20 +84,17 @@ FILA: P4(1) P5(2) P1(7)
 CPU: P2(1) 
 ********** TEMPO 23 **************
 #[evento] ENCERRANDO <P2>
-#[evento] OPERACAO I/O <P4>
-FILA: P1(7) P4(1) 
-CPU: P5(2) 
-********** TEMPO 24 **************
-FILA: P1(7) P4(1) 
-CPU: P5(1) 
-********** TEMPO 25 **************
-#[evento] ENCERRANDO <P5>
-#[evento] OPERACAO I/O <P1>
-FILA: P1(7) 
+FILA: P5(2) P1(7) 
 CPU: P4(1) 
-********** TEMPO 26 **************
+********** TEMPO 24 **************
 #[evento] ENCERRANDO <P4>
-#[evento] OPERACAO I/O <P1>
+FILA: P1(7) 
+CPU: P5(2) 
+********** TEMPO 25 **************
+FILA: P1(7) 
+CPU: P5(1) 
+********** TEMPO 26 **************
+#[evento] ENCERRANDO <P5>
 FILA: Nao ha processos na fila
 CPU: P1(7) 
 ********** TEMPO 27 **************

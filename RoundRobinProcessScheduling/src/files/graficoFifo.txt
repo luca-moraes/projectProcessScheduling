@@ -1,9 +1,9 @@
 ****** GRÁFICO DO ESCALONADOR FIFO******
-|(0)P3 |(2)P4 |(5)P3 |(8)P2 |(13)P4 |(16)P1 |(18)P2 |(23)P4 |(23)P5 |(25)P1 |(25)P4 |(26)P1 |(26)P1 |(28)P1 |(30)P1 |(32)P1 | 
+|(0)P3 |(2)P4 |(5)P3 |(8)P2 |(13)P4 |(16)P1 |(18)P2 |(23)P4 |(24)P5 |(26)P1 |(28)P1 |(30)P1 |(32)P1 | 
 Tempo de espera de cada processo:
 P3: 3
-P4: 18
+P4: 16
 P2: 9
 P1: 14
-P5: 6
-Tempo de espera médio: 10,00
+P5: 7
+Tempo de espera médio: 9.80

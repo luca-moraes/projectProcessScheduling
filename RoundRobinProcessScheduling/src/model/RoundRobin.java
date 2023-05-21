@@ -98,6 +98,7 @@ public class RoundRobin {
             
             //check if the process have an io operation
             if(cpu.ioTimes.contains(cpu.timeRunned)){
+                cpu.ioTimes.remove(0);
                 printEvent(0, cpu);
                 queue.add(cpu);
                 cpu = queue.get(0);
@@ -179,6 +180,7 @@ public class RoundRobin {
             
             //check if the process have an io operation
             if(cpu.ioTimes.contains(cpu.timeRunned)){
+                cpu.ioTimes.remove(0);
                 printEvent(0, cpu);
                 queue.add(cpu);
                 cpu = queue.get(0);
@@ -260,6 +262,7 @@ public class RoundRobin {
             
             //check if the process have an io operation
             if(cpu.ioTimes.contains(cpu.timeRunned)){
+                cpu.ioTimes.remove(0);
                 printEvent(0, cpu);
                 Collections.sort(queue, new SJFComparator());
                 queue.add(cpu);

@@ -46,72 +46,71 @@ CPU: P2(8)
 FILA: P4(4) P1(9) 
 CPU: P2(7) 
 ********** TEMPO 12 **************
-FILA: P4(4) P1(9) 
-CPU: P2(6) 
-********** TEMPO 13 **************
-#[evento] OPERACAO I/O <P2>
-FILA: P1(9) P2(5) 
+#[evento] FIM QUANTUM <P2>
+FILA: P1(9) P2(6) 
 CPU: P4(4) 
-********** TEMPO 14 **************
-FILA: P1(9) P2(5) 
+********** TEMPO 13 **************
+FILA: P1(9) P2(6) 
 CPU: P4(3) 
-********** TEMPO 15 **************
-FILA: P1(9) P2(5) 
+********** TEMPO 14 **************
+FILA: P1(9) P2(6) 
 CPU: P4(2) 
-********** TEMPO 16 **************
+********** TEMPO 15 **************
 #[evento] OPERACAO I/O <P4>
-FILA: P2(5) P4(1) 
+FILA: P2(6) P4(1) 
 CPU: P1(9) 
-********** TEMPO 17 **************
-#[evento] CHEGADA <P5>
-FILA: P2(5) P4(1) P5(2) 
+********** TEMPO 16 **************
+FILA: P2(6) P4(1) 
 CPU: P1(8) 
+********** TEMPO 17 **************
+#[evento] OPERACAO I/O <P1>
+#[evento] CHEGADA <P5>
+FILA: P4(1) P1(7) P5(2) 
+CPU: P2(6) 
 ********** TEMPO 18 **************
-#[evento] OPERACAO I/O <P1>
-FILA: P4(1) P5(2) P1(7) 
-CPU: P2(5) 
-********** TEMPO 19 **************
-FILA: P4(1) P5(2) P1(7) 
-CPU: P2(4) 
-********** TEMPO 20 **************
-FILA: P4(1) P5(2) P1(7) 
-CPU: P2(3) 
-********** TEMPO 21 **************
-FILA: P4(1) P5(2) P1(7) 
-CPU: P2(2) 
-********** TEMPO 22 **************
-FILA: P4(1) P5(2) P1(7) 
-CPU: P2(1) 
-********** TEMPO 23 **************
-#[evento] ENCERRANDO <P2>
-#[evento] OPERACAO I/O <P4>
-FILA: P1(7) P4(1) 
-CPU: P5(2) 
-********** TEMPO 24 **************
-FILA: P1(7) P4(1) 
-CPU: P5(1) 
-********** TEMPO 25 **************
-#[evento] ENCERRANDO <P5>
-#[evento] OPERACAO I/O <P1>
-FILA: P1(7) 
+#[evento] OPERACAO I/O <P2>
+FILA: P1(7) P5(2) P2(5) 
 CPU: P4(1) 
-********** TEMPO 26 **************
+********** TEMPO 19 **************
 #[evento] ENCERRANDO <P4>
-#[evento] OPERACAO I/O <P1>
-FILA: Nao ha processos na fila
+FILA: P5(2) P2(5) 
 CPU: P1(7) 
-********** TEMPO 27 **************
-FILA: Nao ha processos na fila
+********** TEMPO 20 **************
+FILA: P5(2) P2(5) 
 CPU: P1(6) 
-********** TEMPO 28 **************
+********** TEMPO 21 **************
 #[evento] OPERACAO I/O <P1>
-FILA: Nao ha processos na fila
+FILA: P2(5) P1(5) 
+CPU: P5(2) 
+********** TEMPO 22 **************
+FILA: P2(5) P1(5) 
+CPU: P5(1) 
+********** TEMPO 23 **************
+#[evento] ENCERRANDO <P5>
+FILA: P1(5) 
+CPU: P2(5) 
+********** TEMPO 24 **************
+FILA: P1(5) 
+CPU: P2(4) 
+********** TEMPO 25 **************
+FILA: P1(5) 
+CPU: P2(3) 
+********** TEMPO 26 **************
+FILA: P1(5) 
+CPU: P2(2) 
+********** TEMPO 27 **************
+#[evento] FIM QUANTUM <P2>
+FILA: P2(1) 
 CPU: P1(5) 
-********** TEMPO 29 **************
-FILA: Nao ha processos na fila
+********** TEMPO 28 **************
+FILA: P2(1) 
 CPU: P1(4) 
-********** TEMPO 30 **************
+********** TEMPO 29 **************
 #[evento] OPERACAO I/O <P1>
+FILA: P1(3) 
+CPU: P2(1) 
+********** TEMPO 30 **************
+#[evento] ENCERRANDO <P2>
 FILA: Nao ha processos na fila
 CPU: P1(3) 
 ********** TEMPO 31 **************
