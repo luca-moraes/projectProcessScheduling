@@ -86,6 +86,16 @@ public class RoundRobin {
                 }  
             }
             
+            //check if a process has reached the quantum limit
+            if(pQuantum == this.quantum){
+                printEvent(2, cpu);
+                queue.add(cpu);
+                cpu = queue.remove(0);
+                pQuantum = 0;
+                
+                this.printProcessoGrafico(time, cpu);
+            }
+            
             //check if the process have an io operation
             if(cpu.ioTimes.contains(cpu.timeRunned)){
                 printEvent(0, cpu);
@@ -102,16 +112,6 @@ public class RoundRobin {
                 printEvent(1, processList.get(lastListProcess));
                 queue.add(processList.get(lastListProcess));
                 lastListProcess = lastListProcess == processList.size() - 1 ? lastListProcess : lastListProcess + 1;
-            }
-            
-            //check if a process has reached the quantum limit
-            if(pQuantum == this.quantum){
-                printEvent(2, cpu);
-                queue.add(cpu);
-                cpu = queue.remove(0);
-                pQuantum = 0;
-                
-                this.printProcessoGrafico(time, cpu);
             }
             
             printCpu(queue, cpu);
